@@ -25,7 +25,7 @@ def main():
 
     # server part
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as proxy_start:
-        #reuse connection
+        #allow reuse address, bind, and set to listening mode
         proxy_start.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         proxy_start.bind((HOST, PORT))
         proxy_start.listen(1)
@@ -44,7 +44,6 @@ def main():
                 proxy_end.connect((remote_ip , port))
 
                 # send data
-
                 send_full_data = conn.recv(BUFFER_SIZE)
                 print(f"Sending received data {send_full_data} to google")
                 proxy_end.sendall(send_full_data)
